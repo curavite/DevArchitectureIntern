@@ -1,0 +1,147 @@
+
+<br>
+<br>
+<br>
+
+<div class="modal-content">
+  <div class="modal-body text-center" >
+    <form *ngIf="floorAddForm" [formGroup]="floorAddForm" (ngSubmit)="save()" >
+
+    <div class="row">
+      <div class="col col-md-12">
+    <h3>Sipariş Adı</h3>
+<input
+  type="text"
+  placeholder="Sipariş adı girin"
+  aria-label="Text"
+  matInput  
+  [matAutocomplete]="orderAuto"
+
+  formControlName="orderNames"
+  (change)="onOrderOptionClick($event)"
+/>
+<mat-autocomplete #orderAuto="matAutocomplete">
+  <mat-option *ngFor="let option of filteredOrderItems | async" [value]="option.label">
+    {{ option.label }}
+  </mat-option>
+</mat-autocomplete>
+
+<br>
+<br>
+
+<label>Sipariş Adı: {{ selectedOrderName }}</label>
+<br>
+<label>Kumaş Cinsi: {{ selectedOrderMaterialName }}</label>
+
+</div>
+</div>
+
+<div class="row">
+  <div class="col col-md-12">
+
+    <h3>Makine Tipi</h3>
+    <input
+    type="text"
+    placeholder="Makine tipi girin"
+    aria-label="Text"
+    matInput
+    [matAutocomplete]="machineTypeAuto"
+    formControlName="machineTypes"
+
+
+  />
+  <mat-autocomplete #machineTypeAuto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredMachineTypeItems | async" [value]="option.label">
+      {{ option.label }}
+    </mat-option>
+  </mat-autocomplete>
+
+</div>
+</div>
+
+
+  <div class="row">
+    <div class="col col-md-12">
+    <h3>Makine Personeli</h3>
+<input
+  type="text"
+  placeholder="Makine personeli girin"
+  aria-label="Number"
+  matInput
+  [matAutocomplete]="machinePersonnelAuto"
+  formControlName="groupUsers"
+
+
+  
+/>
+<mat-autocomplete #machinePersonnelAuto="matAutocomplete">
+  <mat-option *ngFor="let option of filteredMachineItems | async" [value]="option.label">
+    {{ option.label }}
+  </mat-option>
+</mat-autocomplete>
+
+</div>
+</div>
+
+
+<div class="row">
+  <div class="col col-md-12">
+<h3>Bölge Sorumlusu</h3>
+    <input
+    type="text"
+    placeholder="Bölge Sorumlusu Girin"
+    aria-label="Text"
+    matInput
+    [matAutocomplete]="managerAuto"
+    formControlName="manager"
+
+
+  />
+  <mat-autocomplete #managerAuto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredManagerItems | async" [value]="option.label">
+      {{ option.label }}
+    </mat-option>
+  </mat-autocomplete>
+
+</div>
+</div>
+<div class="row">
+  <div class="col col-md-12">
+
+    <h3>Toplam Ürün Adeti</h3>
+    <input
+    type="number"
+    placeholder="Toplam ürün adeti girin"
+    aria-label="Text"
+    matInput
+    formControlName="sumProductAmount"
+
+  />
+
+
+</div>
+</div>
+<div class="row">
+  <div class="col col-md-12">
+
+    <h3>Brenda Numarası</h3>
+    <input
+    type="string"
+    placeholder="Brenda numarası girin"
+    aria-label="Text"
+    matInput
+    formControlName="brendaNumber"
+
+  />
+
+
+</div>
+</div>
+
+    <br />
+    <br />
+    <button mat-raised-button type="submit" class="btn btn-danger pull-center">Kontrole Başla</button>
+          <div class="clearfix"></div>
+  </form>
+  </div>
+</div>
