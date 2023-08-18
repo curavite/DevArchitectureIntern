@@ -15,6 +15,7 @@ using System.Linq;
 using Business.Handlers.WashingControll_FloorControlls.ValidationRules;
 using System;
 using Business.Handlers.WashingControll_Floors.Queries;
+using ServiceStack;
 
 namespace Business.Handlers.WashingControll_FloorControlls.Commands
 {
@@ -44,10 +45,11 @@ namespace Business.Handlers.WashingControll_FloorControlls.Commands
             public async Task<IResult> Handle(CreateWashingControll_FloorControllCommand request, CancellationToken cancellationToken)
             {
                
-                var amountControll = _mediator.Send(new AmountControllQuery { Amount=request.Amount});
-                if (amountControll.Result.Data==true)
+                var amountControll = await _mediator.Send(new AmountControllQuery { Amount=request.Amount,OrderId=request.OrderId});
+
+                if (amountControll.Data == false)
                 {
-                   return new ErrorResult(Messages.AmountError);
+                    return new ErrorResult(Messages.AmountError);
                 }
 
                 var addedWashingControll_FloorControll = new WashingControll_FloorControll
@@ -62,6 +64,7 @@ namespace Business.Handlers.WashingControll_FloorControlls.Commands
                     ControllTime = request.ControllTime,
                     ControllResult = request.ControllResult,
                     ManagerReview = request.ManagerReview,
+                    OrderId=request.OrderId,
 
                 };
                 if (request.Percent >= 15)

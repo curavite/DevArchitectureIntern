@@ -17,7 +17,7 @@ namespace Core.Extensions
         {
             _next = next;
         }
-
+        
         public async Task InvokeAsync(HttpContext httpContext)
         {
             try

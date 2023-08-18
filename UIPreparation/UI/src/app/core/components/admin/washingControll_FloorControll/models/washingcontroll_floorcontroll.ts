@@ -11,9 +11,10 @@ errorName?:string;
 amount?:number; 
 percent?:number; 
 faultyProduct?:number; 
-controllTime?:string; 
+controllTime?:number; 
 controllResult?:string; 
 managerReview?:string; 
 percentResult?:string; 
+orderId?:number;
 
 }

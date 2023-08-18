@@ -8,6 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Core.Aspects.Autofac.Logging;
 using Core.CrossCuttingConcerns.Logging.Serilog.Loggers;
+using DataAccess.Concrete.EntityFramework;
 
 
 namespace Business.Handlers.WashingControll_Floors.Queries
@@ -36,3 +37,6 @@ namespace Business.Handlers.WashingControll_Floors.Queries
         }
     }
 }
+//var allUsers = await _washingControll_FloorRepository.GetListAsync();
+//var maxUserId = allUsers.Max(u => u.Id);
+//var washingControll_Floor = await _washingControll_FloorRepository.GetAsync(p => p.Id == maxUserId);

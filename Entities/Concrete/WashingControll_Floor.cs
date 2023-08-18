@@ -11,7 +11,12 @@ namespace Entities.Concrete
     {
         public string OrderName { get; set; }
 
-        public string MachineType { get; set; }
+        public string WashingMachine { get; set; }
+
+        public string DryingMachine { get; set; }
+
+        public string SqueezMachine { get; set; }
+
 
         public string MachineEmployee { get; set; }
 
@@ -23,6 +28,7 @@ namespace Entities.Concrete
 
         public string jobRotation { get; set; }
 
-        
+
+
     }
 }

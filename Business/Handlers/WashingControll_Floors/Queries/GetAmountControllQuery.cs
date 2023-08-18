@@ -20,7 +20,7 @@ namespace Business.Handlers.WashingControll_Floors.Queries
 
     public class AmountControllQuery : IRequest<IDataResult<bool>>
     {
-        public int ProductId { get; set; }
+        public int OrderId { get; set; }
         public int Amount { get; set; }
         public class AmountControllQueryHandler : IRequestHandler<AmountControllQuery, IDataResult<bool>>
         {
@@ -37,7 +37,7 @@ namespace Business.Handlers.WashingControll_Floors.Queries
             [SecuredOperation(Priority = 1)]
             public async Task<IDataResult<bool>> Handle(AmountControllQuery request, CancellationToken cancellationToken)
             {
-                return new SuccessDataResult<bool>(await _washingControll_FloorRepository.AmountControll(request.Amount));
+                return new SuccessDataResult<bool>(await _washingControll_FloorRepository.AmountControll(request.Amount,request.OrderId));
 
             }
         }

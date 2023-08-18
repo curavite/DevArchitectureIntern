@@ -21,7 +21,7 @@ import { UserComponent } from 'app/core/components/admin/user/user.component';
 import { TranslateLoader, TranslateModule, TranslatePipe } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { TranslationService } from 'app/core/services/translation.service';
+import { TranslationService } from 'app/core/services/Translation.service';
 import { LanguageComponent } from '../components/admin/language/language.component';
 import { TranslateComponent } from '../components/admin/translate/translate.component';
 import { OperationClaimComponent } from '../components/admin/operationclaim/operationClaim.component';
@@ -33,7 +33,11 @@ import { FloorComponent } from '../components/admin/floor/floor.component';
 import { ErrorComponent } from '../components/admin/error/error.component';
 import { MachineComponent } from '../components/admin/machine/machine.component';
 import { OrderComponent } from '../components/admin/order/order.component';
+import { MatDialogModule} from '@angular/material/dialog';
+
 import { WashingControll_FloorControllComponent } from '../components/admin/washingControll_FloorControll/washingControll_FloorControll.component';
+import { OpenDialogComponent } from '../components/admin/open-dialog/open-dialog.component';
+
 
 
 // export function layoutHttpLoaderFactory(http: HttpClient) {
@@ -61,6 +65,7 @@ import { WashingControll_FloorControllComponent } from '../components/admin/wash
         NgbModule,
         NgMultiSelectDropDownModule,
         SweetAlert2Module,
+        MatDialogModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,
@@ -82,6 +87,7 @@ import { WashingControll_FloorControllComponent } from '../components/admin/wash
         FloorComponent,
         ErrorComponent,
         MachineComponent,
+        OpenDialogComponent,
         OrderComponent,
         WashingControll_FloorControllComponent,
 

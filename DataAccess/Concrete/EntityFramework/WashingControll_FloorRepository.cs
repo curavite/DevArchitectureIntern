@@ -15,9 +15,9 @@ namespace DataAccess.Concrete.EntityFramework
         public WashingControll_FloorRepository(ProjectDbContext context) : base(context)
         {
         }
-        public async Task<bool> AmountControll(int amount)
+        public async Task<bool> AmountControll(int amount,int orderId)
         {
-            var isOkey = await Context.WashingControll_Floors.AnyAsync(p => p.SumProductAmount / 10 < amount);
+            var isOkey = await Context.WashingControll_Floors.AnyAsync(p => p.SumProductAmount / 10 < amount && p.Id==orderId);
             return isOkey;
         }
     }

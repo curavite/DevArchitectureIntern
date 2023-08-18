@@ -36,28 +36,78 @@
 </div>
 </div>
 
+
 <div class="row">
   <div class="col col-md-12">
 
-    <h3>Makine Tipi</h3>
+    <h3> Yıkma Makine Tipi</h3>
     <input
     type="text"
-    placeholder="Makine tipi girin"
+    placeholder="Yıkama makine tipi girin"
     aria-label="Text"
     matInput
-    [matAutocomplete]="machineTypeAuto"
-    formControlName="machineTypes"
+    [matAutocomplete]="washingMachineAuto"
+    formControlName="washingMachine"
 
 
   />
-  <mat-autocomplete #machineTypeAuto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredMachineTypeItems | async" [value]="option.label">
+  <mat-autocomplete #washingMachineAuto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredWashingMachineTypeItems | async" [value]="option.label">
       {{ option.label }}
     </mat-option>
   </mat-autocomplete>
 
 </div>
 </div>
+
+
+<div class="row">
+  <div class="col col-md-12">
+
+    <h3>Kurulama Makine Tipi</h3>
+    <input
+    type="text"
+    placeholder="Kurulama makine tipi girin"
+    aria-label="Text"
+    matInput
+    [matAutocomplete]="dryingMachineAuto"
+    formControlName="dryingMachine"
+
+
+  />
+  <mat-autocomplete #dryingMachineAuto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredDryingMachineTypeItems | async" [value]="option.label">
+      {{ option.label }}
+    </mat-option>
+  </mat-autocomplete>
+
+</div>
+</div>
+
+
+<div class="row">
+  <div class="col col-md-12">
+
+    <h3> Sıkma Makine Tipi</h3>
+    <input
+    type="text"
+    placeholder="Sıkma makine tipi girin"
+    aria-label="Text"
+    matInput
+    [matAutocomplete]="squeezMachineAuto"
+    formControlName="squeezMachine"
+
+
+  />
+  <mat-autocomplete #squeezMachineAuto="matAutocomplete">
+    <mat-option *ngFor="let option of filteredSquezeeMachineTypeItems | async" [value]="option.label">
+      {{ option.label }}
+    </mat-option>
+  </mat-autocomplete>
+
+</div>
+</div>
+
 
 
   <div class="row">

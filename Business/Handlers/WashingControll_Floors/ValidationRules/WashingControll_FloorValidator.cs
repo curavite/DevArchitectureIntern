@@ -9,7 +9,9 @@ namespace Business.Handlers.WashingControll_Floors.ValidationRules
     {
         public CreateWashingControll_FloorValidator()
         {
-            RuleFor(x => x.MachineType).NotEmpty();
+            RuleFor(x => x.WashingMachine).NotEmpty();
+            RuleFor(x => x.DryingMachine).NotEmpty();
+            RuleFor(x => x.SqueezMachine).NotEmpty();
             RuleFor(x => x.MachineEmployee).NotEmpty();
             RuleFor(x => x.ManagerName).NotEmpty();
             RuleFor(x => x.SumProductAmount).NotEmpty();
@@ -22,7 +24,9 @@ namespace Business.Handlers.WashingControll_Floors.ValidationRules
     {
         public UpdateWashingControll_FloorValidator()
         {
-            RuleFor(x => x.MachineType).NotEmpty();
+            RuleFor(x => x.WashingMachine).NotEmpty();
+            RuleFor(x => x.DryingMachine).NotEmpty();
+            RuleFor(x => x.SqueezMachine).NotEmpty();
             RuleFor(x => x.MachineEmployee).NotEmpty();
             RuleFor(x => x.ManagerName).NotEmpty();
             RuleFor(x => x.SumProductAmount).NotEmpty();

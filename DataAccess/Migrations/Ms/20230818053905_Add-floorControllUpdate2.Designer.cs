@@ -4,6 +4,7 @@ using DataAccess.Concrete.EntityFramework.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.Migrations.Ms
 {
     [DbContext(typeof(MsDbContext))]
-    partial class MsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230818053905_Add-floorControllUpdate2")]
+    partial class AddfloorControllUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1402,9 +1405,6 @@ namespace DataAccess.Migrations.Ms
                     b.Property<int>("CreatedUserId")
                         .HasColumnType("int");
 
-                    b.Property<string>("DryingMachine")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("LastUpdatedDate")
                         .HasColumnType("datetime2");
 
@@ -1414,13 +1414,13 @@ namespace DataAccess.Migrations.Ms
                     b.Property<string>("MachineEmployee")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("MachineType")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ManagerName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SqueezMachine")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
@@ -1428,9 +1428,6 @@ namespace DataAccess.Migrations.Ms
 
                     b.Property<int>("SumProductAmount")
                         .HasColumnType("int");
-
-                    b.Property<string>("WashingMachine")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
@@ -1457,8 +1454,8 @@ namespace DataAccess.Migrations.Ms
                     b.Property<string>("ControllResult")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ControllTime")
-                        .HasColumnType("int");
+                    b.Property<string>("ControllTime")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");

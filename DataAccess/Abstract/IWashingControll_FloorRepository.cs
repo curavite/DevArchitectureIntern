@@ -7,7 +7,7 @@ namespace DataAccess.Abstract
 {
     public interface IWashingControll_FloorRepository : IEntityRepository<WashingControll_Floor>
     {
-        Task<Boolean> AmountControll(int amount);
+        Task<Boolean> AmountControll(int amount,int orderId);
 
     }
 }

@@ -49,7 +49,9 @@ namespace Business.Handlers.WashingControll_Floors.Commands
                 isThereWashingControll_FloorRecord.Status = request.Status;
                 isThereWashingControll_FloorRecord.isDeleted = false;
                 isThereWashingControll_FloorRecord.OrderName = request.OrderName;
-                isThereWashingControll_FloorRecord.MachineType = request.MachineType;
+                isThereWashingControll_FloorRecord.WashingMachine=request.WashingMachine;
+                isThereWashingControll_FloorRecord.DryingMachine = request.DryingMachine;
+                isThereWashingControll_FloorRecord.SqueezMachine=request.SqueezMachine;
                 isThereWashingControll_FloorRecord.MachineEmployee = request.MachineEmployee;
                 isThereWashingControll_FloorRecord.ManagerName = request.ManagerName;
                 isThereWashingControll_FloorRecord.SumProductAmount = request.SumProductAmount;

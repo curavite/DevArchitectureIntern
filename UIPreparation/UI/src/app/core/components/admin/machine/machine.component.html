@@ -4,7 +4,7 @@
       <div class="col-md-12">
         <div class="card">
           <div class="card-header card-header-danger">
-            <h4 class="card-title ">{{'MachineList'| translate}}</h4>
+            <h4 class="card-title ">Makine Listesi</h4>
             <a *ngIf="checkClaim('CreateMachineCommand')" class="pull-right" data-toggle="modal" data-target="#machine"> <i style="color:white"  title="{{'Add'| translate}}" class="far fa-plus-square fa-2x"></i></a>
           </div>
           <div class="card-body">
@@ -108,17 +108,22 @@
               </mat-form-field>
             </div>
           </div>
-					<div class="row">
+          <div class="row">
             <div class="col col-md-12">
-              <mat-form-field class="example-full-width">
-                <input matInput placeholder="machineType" type="text" id="machineType" name="machineType"
-                       formControlName="machineType" />
-                <div class="alert alert-danger"
-                     *ngIf="machineAddForm.get('machineType')!.hasError('machineType') && machineAddForm.get('machineType')!.dirty">
+              <form-field class="example-full-width">
+                <label>Machine Type</label>
+                <select placeholder="Machine Type" id="machineType" name="machineType" formControlName="machineType">
+                  <option value="Yıkama">Yıkama</option>
+                  <option value="Kurulama">Kurulama</option>
+                  <option value="Sıkma">Sıkma</option>
+                </select>
+                <div class="alert alert-danger" *ngIf="machineAddForm.get('machineType')!.hasError('required') && machineAddForm.get('machineType')!.dirty">
+                  Please select a machine type.
                 </div>
-              </mat-form-field>
+              </form-field>
             </div>
           </div>
+          
 
           		
 				<div class="row">

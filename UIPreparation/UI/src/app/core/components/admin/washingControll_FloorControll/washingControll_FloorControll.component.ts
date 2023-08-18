@@ -14,7 +14,9 @@ import { FloorService } from "../floor/services/wscFloor.service";
 import { WashingControll_Floor } from "../floor/models/wscFloor";
 import { Error } from "../error/models/error";
 import { ErrorService } from "../error/services/error.service";
-import { error } from "console";
+import { error, log } from "console";
+import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
+import { OpenDialogComponent } from "../open-dialog/open-dialog.component";
 
 declare var jQuery: any;
 
@@ -48,6 +50,17 @@ export class WashingControll_FloorControllComponent
 
   faultyProduct: number = 0;
   totalPercent: number = 0;
+  sayacElem: HTMLElement | null = null; // initialize it with null
+
+  orderId:number=0;
+
+  realSecond:number=0;
+  second:number=0;
+  interval:any;
+  elapsedSeconds:number=0;
+
+   
+
   washingControll_FloorControllAddForm: FormGroup;
 
   washingControll_FloorControllId: number;
@@ -59,20 +72,25 @@ export class WashingControll_FloorControllComponent
     private lookupService: LookUpService,
     private alertifyService: AlertifyService,
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+	private dialog: MatDialog
   ) {
-    this.faultyProduct = 0; // İlk başta hatalı ürün sayısını sıfırlayın
+    this.faultyProduct = 0; 
   }
 
   ngAfterViewInit(): void {}
 
   ngOnInit() {
-    this.getWashingControll_FloorControllList();
+    this.startTimer();
+      this.getWashingControll_FloorControllList();
     this.getErrorList();
     this.createWashingControll_FloorControllAddForm();
     this.getFloorList();
 	this.getTotalCount();
 	this.calculateTotal();
+  this.startTimer();
+
+
   }
 
   getWashingControll_FloorControllList() {
@@ -80,18 +98,24 @@ export class WashingControll_FloorControllComponent
       .getWashingControll_FloorControllList()
       .subscribe((data) => {
         this.washingControll_FloorControllList = data;
-        this.dataSource = new MatTableDataSource(data);
-        this.configDataTable();
+         this.dataSource = new MatTableDataSource();
+         this.configDataTable();
       });
   }
 
+
+  
+
   save() {
-	console.log("tıklandı");
 	
     this.washingControll_FloorControll = Object.assign({},this.washingControll_FloorControllAddForm.value);
 	this.washingControll_FloorControll.amount=this.getTotalCount();
 	this.washingControll_FloorControll.percent=this.calculateTotal();
 	this.washingControll_FloorControll.faultyProduct=this.faultyProduct;
+	this.washingControll_FloorControll.orderId=this.orderId;	
+  
+ this.washingControll_FloorControll.controllTime=this.second;
+ 
     if (this.washingControll_FloorControll.id == 0)
       this.addWashingControll_FloorControll();
     else this.updateWashingControll_FloorControll();
@@ -156,8 +180,11 @@ export class WashingControll_FloorControllComponent
   getFloorList() {
     this.floorService.getWashingControll_FloorList().subscribe((data) => {
       this.floorList = data;
-
+	  
+		
       this.floorListLenght = this.floorList.length - 1;
+	  this.orderId=this.floorList[this.floorListLenght].id
+
     });
   }
 
@@ -171,9 +198,17 @@ export class WashingControll_FloorControllComponent
         jQuery("#washingcontroll_floorcontroll").modal("hide");
         this.alertifyService.success(data);
         this.clearFormGroup(this.washingControll_FloorControllAddForm);
+		this.openSuccessPopup()
       },(error)=>{
 		this.alertifyService.error(error.error)
 	  });
+  }
+  openSuccessPopup(): void {
+  
+
+    const dialogRef = this.dialog.open(OpenDialogComponent, {
+	});
+   
   }
 
   updateWashingControll_FloorControll() {
@@ -197,8 +232,13 @@ export class WashingControll_FloorControllComponent
       });
   }
   setControllResultToTamir() {
-    this.washingControll_FloorControllAddForm.get('controllResult')?.setValue('Tamir');
-	this.save();
+    this.stopTimer(); 
+    this.finishStarter();
+    
+    
+    
+    this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Tamir");
+    this.save(); 
   }
   createWashingControll_FloorControllAddForm() {
     this.washingControll_FloorControllAddForm = this.formBuilder.group({
@@ -206,11 +246,13 @@ export class WashingControll_FloorControllComponent
       errorName: ["", Validators.required],
       amount: [0, Validators.required],
       faultyProduct: ["", Validators.required],
-      controllTime: ["", Validators.required],
+      controllTime: [0, Validators.required],
       controllResult: ["", Validators.required],
       managerReview: ["", Validators.required],
+	  
     });
   }
+  
 
   deleteWashingControll_FloorControll(washingControll_FloorControllId: number) {
     this.washingControll_FloorControllService
@@ -266,5 +308,50 @@ export class WashingControll_FloorControllComponent
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
+    
   }
+  
+  startTimer() {
+    this.sayacElem = document.getElementById("sayac"); // use "sayac" as the id
+    if (!this.interval && this.sayacElem) {
+      this.counter();
+      this.interval = setInterval(this.counter.bind(this), 1000);
+    }
+  }
+
+  counter() {
+    var toplamSaniye = this.second;
+    var saat = Math.floor(toplamSaniye / 3600) % 24;
+    var dakika = Math.floor(toplamSaniye / 60) % 60;
+    var saniye = toplamSaniye % 60;
+
+    if (this.sayacElem) {
+      this.sayacElem.innerHTML =
+        (saat < 10 ? "0" + saat : saat) +
+        ":" +
+        (dakika < 10 ? "0" + dakika : dakika) +
+        ":" +
+        (saniye < 10 ? "0" + saniye : saniye);
+    }
+
+    this.second += 1;
+    
+  }
+
+  stopTimer() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  finishStarter() {
+    this.stopTimer();
+    if (this.sayacElem) {
+      this.sayacElem.innerHTML = "";
+    }
+    
+  }
+   
+  
+
+
 }

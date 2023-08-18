@@ -34,8 +34,14 @@ export class FloorComponent implements OnInit {
   floor:WashingControll_Floor=new WashingControll_Floor;
   machineList:Machine[];
 
-  machineTypeItems:LookUp[]=[];
-  filteredMachineTypeItems: Observable<LookUp[]>;
+  machineWashingTypeItems:LookUp[]=[];
+  filteredWashingMachineTypeItems: Observable<LookUp[]>;
+
+  machineDryingTypeItems:LookUp[]=[];
+  filteredDryingMachineTypeItems: Observable<LookUp[]>;
+
+  machineSquezeeTypeItems:LookUp[]=[];
+  filteredSquezeeMachineTypeItems: Observable<LookUp[]>;
 
   orderNumber:LookUp[]=[];
   filteredOrderItems: Observable<LookUp[]>;
@@ -51,11 +57,7 @@ export class FloorComponent implements OnInit {
   floorAddForm: FormGroup;
 
 
-  groupUsers = new FormControl();
-  orderNames = new FormControl();
-  machineTypes = new FormControl();
-  manager = new FormControl();
-
+  
 
   ngOnInit(): void {
 
@@ -75,10 +77,18 @@ export class FloorComponent implements OnInit {
       startWith(''),
       map(value => this._filterOrderName(value || '')),
     );
-    this.getOrderMachineType();
-    this.filteredMachineTypeItems = this.floorAddForm.controls.machineTypes.valueChanges.pipe(
+    this.getMachineType();
+    this.filteredWashingMachineTypeItems = this.floorAddForm.controls.washingMachine.valueChanges.pipe(
       startWith(''),
-      map(value => this._filterMachineType(value || '')),
+      map(value => this._filterWashingMachineType(value || '')),
+    );
+    this.filteredDryingMachineTypeItems = this.floorAddForm.controls.dryingMachine.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterDryingMachineType(value || '')),
+    );
+    this.filteredSquezeeMachineTypeItems = this.floorAddForm.controls.squeezMachine.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filterSquezeeMachineType(value || '')),
     );
     this.getManagers();
     this.filteredManagerItems = this.floorAddForm.controls.manager.valueChanges.pipe(
@@ -110,10 +120,22 @@ export class FloorComponent implements OnInit {
     
   }
 
-  private _filterMachineType(value: string): LookUp[] {
+  private _filterWashingMachineType(value: string): LookUp[] {
     const filterValue = value.toLowerCase();
 
-    return this.machineTypeItems.filter(option => option.label.toLowerCase().includes(filterValue));
+    return this.machineWashingTypeItems.filter(option => option.label.toLowerCase().includes(filterValue));
+    
+  }
+  private _filterDryingMachineType(value: string): LookUp[] {
+    const filterValue = value.toLowerCase();
+
+    return this.machineDryingTypeItems.filter(option => option.label.toLowerCase().includes(filterValue));
+    
+  }
+  private _filterSquezeeMachineType(value: string): LookUp[] {
+    const filterValue = value.toLowerCase();
+
+    return this.machineSquezeeTypeItems.filter(option => option.label.toLowerCase().includes(filterValue));
     
   }
  onOrderOptionClick(event) {
@@ -126,25 +148,38 @@ getOrderNameById(id: number) {
     this.order = data;
     this.selectedOrderName = data.orderModelName;
     this.selectedOrderMaterialName= data.orderMaterialName;
-    console.log(this.selectedOrderName);
   });
 }
   
 
 
-  getOrderMachineType(){
-    this.machineService.getMachineList().subscribe((data)=>{
-      this.machineList=data;
-      this.machineList.forEach((element)=>{
-        this.machineTypeItems.push({
-          id: element.id,
-          label:element.machineType
-        })
-      })
-    })
-    console.log(this.machineTypeItems);
+getMachineType() {
+  this.machineService.getMachineList().subscribe((data) => {
+    this.machineList = data;
     
+    this.machineList.forEach((element) => {
+      if (element.machineType === "Yıkama") {
+        this.machineWashingTypeItems.push({
+          id: element.id,
+          label: element.machineName
+        });}
+        if (element.machineType === "Kurulama") {
+          this.machineDryingTypeItems.push({
+            id: element.id,
+            label: element.machineName
+          });
+        }
+        if (element.machineType === "Sıkma") {
+          this.machineSquezeeTypeItems.push({
+            id: element.id,
+            label: element.machineName
+          });
+        }
+    }) 
+    });
   }
+
+
 
   getorderNumber(){
     this.orderService.getOrderList().subscribe((data)=>{
@@ -155,7 +190,6 @@ getOrderNameById(id: number) {
           label:element.orderNumber
         })
       })
-      console.log(this.orderNumber);
 
     })
     
@@ -166,7 +200,6 @@ getOrderNameById(id: number) {
     
    this.groupService.getGroupUsers(1).subscribe(data => {
      this.machineUserSelectedItems = data;
-     console.log(this.machineUserSelectedItems);
      
    })
   }
@@ -174,7 +207,6 @@ getOrderNameById(id: number) {
   getManagers(){
     this.groupService.getGroupUsers(2).subscribe(data => {
       this.managerSelectedItems = data;
-      console.log(this.managerSelectedItems);
       
       
     })
@@ -196,11 +228,12 @@ getOrderNameById(id: number) {
 
 
   addFloor(){
-    console.log(this.floor);
     this.floor.createdUserId=1;
     this.floor.managerName=this.floorAddForm.controls.manager.value;
     this.floor.jobRotation="Gündüz";
-    this.floor.machineType=this.floorAddForm.controls.machineTypes.value;
+    this.floor.washingMachine=this.floorAddForm.controls.washingMachine.value;
+    this.floor.dryingMachine=this.floorAddForm.controls.dryingMachine.value;
+    this.floor.squeezMachine=this.floorAddForm.controls.squeezMachine.value;
     this.floor.machineEmployee=this.floorAddForm.controls.groupUsers.value;
     this.floor.orderName=this.floorAddForm.controls.orderNames.value;
     
@@ -216,7 +249,6 @@ getOrderNameById(id: number) {
     
 		if (this.floorAddForm.valid) {
 			this.floor = Object.assign({}, this.floorAddForm.value)
-      console.log(this.floor);
       
 
 			if (this.floor.id == 0){
@@ -236,7 +268,9 @@ getOrderNameById(id: number) {
 			id : [0],
       groupUsers : ["", Validators.required],
 orderNames : ["", Validators.required],
-machineTypes: ["", Validators.required],
+washingMachine: ["", Validators.required],
+dryingMachine: ["", Validators.required],
+squeezMachine: ["", Validators.required],
 manager : ["", Validators.required],
 sumProductAmount:[0, Validators.required],
 brendaNumber : ["", Validators.required],
