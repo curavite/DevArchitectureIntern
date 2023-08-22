@@ -7,17 +7,12 @@ using System.Threading.Tasks;
 
 namespace Entities.Concrete
 {
-    public class Error:BaseEntity,IEntity
+    public class FloorControllError:BaseEntity,IEntity
     {
         public string ErrorName { get; set; }
 
-        public bool IsError { get; set; }
+        public int Amount { get; set; }
 
-        public double RowNumber { get; set; }
-
-        public string Departmant { get; set; }
-
-        public string ColorCode { get; set; }
-
+        public int Percent { get; set; }
     }
 }

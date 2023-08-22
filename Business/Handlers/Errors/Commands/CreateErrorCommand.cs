@@ -48,7 +48,7 @@ namespace Business.Handlers.Errors.Commands
                 {
                     CreatedUserId = request.CreatedUserId,
                     CreatedDate = DateTime.Now,
-                    Status = request.Status,
+                    Status = true,
                     isDeleted = request.isDeleted,
                     ErrorName = request.ErrorName,
                     IsError = request.IsError,

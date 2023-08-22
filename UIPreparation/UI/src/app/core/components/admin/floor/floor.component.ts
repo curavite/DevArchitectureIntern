@@ -29,6 +29,7 @@ export class FloorComponent implements OnInit {
   selectedOrderName:string;
   selectedOrderMaterialName:string;
 
+
   orderList:Order[];
   order:Order=new Order;
   floor:WashingControll_Floor=new WashingControll_Floor;
@@ -56,6 +57,8 @@ export class FloorComponent implements OnInit {
 
   floorAddForm: FormGroup;
 
+  selectedOrder:Order[];
+  selectedOrderNumber:string;
 
   
 
@@ -141,7 +144,17 @@ export class FloorComponent implements OnInit {
  onOrderOptionClick(event) {
   const selectedId = event.target.value;
   this.getOrderNameById(selectedId);
+  //  const selectedLabel = this.orderList.find(number => number.id === selectedId)?.orderNumber;
+   this.selectedOrder = this.orderList.filter(x => x.id == selectedId);
+
+  // this.floorAddForm.controls['orderNames'].setValue(selectedLabel);
+  // this.floor.orderName=selectedLabel;
+  this.selectedOrder.forEach((item)=>{
+    this.selectedOrderNumber=item.orderNumber
+  });
+  
 }
+
 
 getOrderNameById(id: number) {
   this.orderService.getOrderById(id).subscribe((data) => {
@@ -235,14 +248,20 @@ getMachineType() {
     this.floor.dryingMachine=this.floorAddForm.controls.dryingMachine.value;
     this.floor.squeezMachine=this.floorAddForm.controls.squeezMachine.value;
     this.floor.machineEmployee=this.floorAddForm.controls.groupUsers.value;
-    this.floor.orderName=this.floorAddForm.controls.orderNames.value;
+     this.floor.orderName=this.selectedOrderNumber;
+     ;
+    
     
 		this.floorService.addWashingControll_Floor(this.floor).subscribe(data => {
 			this.floor = new WashingControll_Floor();
       jQuery('#order').modal('hide');
 			this.clearFormGroup(this.floorAddForm);
+      this.router.navigateByUrl("/floorcontroll");
 
-		})
+
+		},(error)=>{
+      this.alertifyService.info(error.error)
+    })
 
 	}
   save(){
@@ -253,11 +272,14 @@ getMachineType() {
 
 			if (this.floor.id == 0){
 				this.addFloor();
-        this.router.navigateByUrl("/floorcontroll");
 
       }
 			
 		}
+    else{
+      this.alertifyService.error("Boş olan verileri doldurun!")
+
+    }
 
 	}
 

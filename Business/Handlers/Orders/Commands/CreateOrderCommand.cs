@@ -50,7 +50,7 @@ namespace Business.Handlers.Orders.Commands
                 {
                     CreatedUserId = request.CreatedUserId,
                     CreatedDate = DateTime.Now,
-                    Status = request.Status,
+                    Status = true,
                     isDeleted = false,
                     OrderNumber = request.OrderNumber,
                     OrderModelName = request.OrderModelName,

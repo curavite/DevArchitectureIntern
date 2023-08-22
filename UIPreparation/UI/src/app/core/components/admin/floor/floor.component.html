@@ -1,16 +1,13 @@
 
-<br>
-<br>
-<br>
 
-<div class="modal-content">
-  <div class="modal-body text-center" >
-    <form *ngIf="floorAddForm" [formGroup]="floorAddForm" (ngSubmit)="save()" >
+<div class="main"  >
+  <div class="flash-card">
+    <form *ngIf="floorAddForm" [formGroup]="floorAddForm" (ngSubmit)="save()">
+       
 
-    <div class="row">
-      <div class="col col-md-12">
-    <h3>Sipariş Adı</h3>
-<input
+        <h3>Sipariş Adı</h3>
+<!-- <input
+class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;"
   type="text"
   placeholder="Sipariş adı girin"
   aria-label="Text"
@@ -24,26 +21,40 @@
   <mat-option *ngFor="let option of filteredOrderItems | async" [value]="option.label">
     {{ option.label }}
   </mat-option>
-</mat-autocomplete>
-
-<br>
-<br>
-
-<label>Sipariş Adı: {{ selectedOrderName }}</label>
-<br>
-<label>Kumaş Cinsi: {{ selectedOrderMaterialName }}</label>
-
+</mat-autocomplete> -->
+<div  class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;">
+  <select   id="orderNames" name="orderNames" formControlName="orderNames" (change)="onOrderOptionClick($event)">
+  <option *ngFor="let number of orderNumber" [value]="number.id">{{ number.label }}</option>
+</select>
 </div>
+<br>
+<br>
+
+<div class="row">
+  <div class="col-md-6">
+    <label  style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;">Sipariş Adı: {{ selectedOrderName }}</label>
+  </div>
+  
+  <div class="col-md-6">
+    <label style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;">Kumaş Cinsi: {{ selectedOrderMaterialName }}</label>
+  </div>
 </div>
+
+
+
+
+
 
 
 <div class="row">
   <div class="col col-md-12">
 
-    <h3> Yıkma Makine Tipi</h3>
+    <h3> Yıkama Makinesi</h3>
     <input
+    style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;"
+
     type="text"
-    placeholder="Yıkama makine tipi girin"
+    placeholder="Yıkama makinesi seçin"
     aria-label="Text"
     matInput
     [matAutocomplete]="washingMachineAuto"
@@ -64,10 +75,11 @@
 <div class="row">
   <div class="col col-md-12">
 
-    <h3>Kurulama Makine Tipi</h3>
+    <h3>Kurulama Makinesi</h3>
     <input
+     style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;"
     type="text"
-    placeholder="Kurulama makine tipi girin"
+    placeholder="Kurulama Makinesi Seçin"
     aria-label="Text"
     matInput
     [matAutocomplete]="dryingMachineAuto"
@@ -80,6 +92,7 @@
       {{ option.label }}
     </mat-option>
   </mat-autocomplete>
+  
 
 </div>
 </div>
@@ -88,10 +101,11 @@
 <div class="row">
   <div class="col col-md-12">
 
-    <h3> Sıkma Makine Tipi</h3>
+    <h3> Sıkma Makine </h3>
     <input
+    style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;"
     type="text"
-    placeholder="Sıkma makine tipi girin"
+    placeholder="Sıkma makinesi seçin"
     aria-label="Text"
     matInput
     [matAutocomplete]="squeezMachineAuto"
@@ -104,89 +118,84 @@
       {{ option.label }}
     </mat-option>
   </mat-autocomplete>
-
-</div>
-</div>
-
-
-
-  <div class="row">
-    <div class="col col-md-12">
-    <h3>Makine Personeli</h3>
-<input
-  type="text"
-  placeholder="Makine personeli girin"
-  aria-label="Number"
-  matInput
-  [matAutocomplete]="machinePersonnelAuto"
-  formControlName="groupUsers"
-
-
   
-/>
-<mat-autocomplete #machinePersonnelAuto="matAutocomplete">
-  <mat-option *ngFor="let option of filteredMachineItems | async" [value]="option.label">
-    {{ option.label }}
-  </mat-option>
-</mat-autocomplete>
 
 </div>
 </div>
+
 
 
 <div class="row">
-  <div class="col col-md-12">
-<h3>Bölge Sorumlusu</h3>
+  <div class="col-md-6">
+    <h4>Makine Personeli</h4>
     <input
-    type="text"
-    placeholder="Bölge Sorumlusu Girin"
-    aria-label="Text"
-    matInput
-    [matAutocomplete]="managerAuto"
-    formControlName="manager"
-
-
-  />
-  <mat-autocomplete #managerAuto="matAutocomplete">
-    <mat-option *ngFor="let option of filteredManagerItems | async" [value]="option.label">
-      {{ option.label }}
-    </mat-option>
-  </mat-autocomplete>
-
+      
+      style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;"
+      type="text"
+      placeholder="Makine personeli girin"
+      aria-label="Number"
+      matInput
+      [matAutocomplete]="machinePersonnelAuto"
+      formControlName="groupUsers"
+    />
+    <mat-autocomplete #machinePersonnelAuto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredMachineItems | async" [value]="option.label">
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  
+  <div class="col-md-6">
+    <h4>Bölge Sorumlusu</h4>
+    <input
+      style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;"
+      type="text"
+      placeholder="Bölge Sorumlusu Girin"
+      aria-label="Text"
+      matInput
+      [matAutocomplete]="managerAuto"
+      formControlName="manager"
+    />
+    <mat-autocomplete #managerAuto="matAutocomplete">
+      <mat-option *ngFor="let option of filteredManagerItems | async" [value]="option.label">
+        {{ option.label }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
 </div>
-</div>
+
+
+
+
+
 <div class="row">
-  <div class="col col-md-12">
-
-    <h3>Toplam Ürün Adeti</h3>
+  <div class="col col-md-6">
+    <h4>Toplam Ürün Adeti</h4>
     <input
-    type="number"
-    placeholder="Toplam ürün adeti girin"
-    aria-label="Text"
-    matInput
-    formControlName="sumProductAmount"
-
-  />
-
-
-</div>
-</div>
-<div class="row">
-  <div class="col col-md-12">
-
-    <h3>Brenda Numarası</h3>
+      style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;"
+      type="number"
+      placeholder="Toplam ürün adeti girin"
+      aria-label="Text"
+      matInput
+      formControlName="sumProductAmount"
+    />
+  </div>
+  <div class="col col-md-6">
+    <h4>Brenda Numarası</h4>
     <input
-    type="string"
-    placeholder="Brenda numarası girin"
-    aria-label="Text"
-    matInput
-    formControlName="brendaNumber"
-
-  />
-
-
+      style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;"
+      type="string"
+      placeholder="Brenda numarası girin"
+      aria-label="Text"
+      matInput
+      formControlName="brendaNumber"
+    />
+  </div>
 </div>
-</div>
+
+<mat-slide-toggle>Slide me!</mat-slide-toggle>
+
+
 
     <br />
     <br />

@@ -22,13 +22,13 @@ export class ErrorComponent implements AfterViewInit, OnInit {
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	displayedColumns: string[] = ['createdDate','status','errorName','isError','rowNumber','departmant','colorCode', 'update','delete'];
+	displayedColumns: string[] = ['createdDate','errorName','isError','rowNumber','departmant','colorCode', 'update','delete'];
 
 	errorList:Error[];
 	error:Error=new Error();
 
 	errorAddForm: FormGroup;
-
+	selectedColor: string = "#ffffff";
 
 	errorId:number;
 
@@ -51,9 +51,11 @@ export class ErrorComponent implements AfterViewInit, OnInit {
             this.configDataTable();
 		});
 	}
+	updateBackgroundColor() {
+		this.selectedColor = this.errorAddForm.get('colorCode').value;
+	  }
 
 	save(){
-
 		if (this.errorAddForm.valid) {
 			this.error = Object.assign({}, this.errorAddForm.value)
 
@@ -99,7 +101,6 @@ export class ErrorComponent implements AfterViewInit, OnInit {
 		this.errorAddForm = this.formBuilder.group({		
 			id : [0],
 
-status : [true, Validators.required],
 errorName : ["", Validators.required],
 isError : [false],
 rowNumber : [0, Validators.required],

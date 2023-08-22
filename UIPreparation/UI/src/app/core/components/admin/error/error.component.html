@@ -26,14 +26,6 @@
 				   </ng-container>
 	
 	
-                   <ng-container matColumnDef="status">
-                     <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'Status'|translate}}</th>
-                     <td mat-cell *matCellDef="let element"> 
-                        <mat-checkbox [checked]="element.status" [disabled]="true"></mat-checkbox>
-                     </td>
-				   </ng-container>
-	
-	
                    <ng-container matColumnDef="errorName">
                      <th mat-header-cell *matHeaderCellDef mat-sort-header>{{'ErrorName'|translate}}</th>
                      <td mat-cell *matCellDef="let element">{{element.errorName}}</td>
@@ -144,36 +136,49 @@
           <div class="row">
             <div class="col col-md-12">
               <form-field class="example-full-width">
-                <select placeholder="departmant" id="departmant" name="departmant" formControlName="departmant">
+                <div class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;">
+                <select   id="departmant" name="departmant" formControlName="departmant">
+                  <option disabled selected hidden>Departmant Seçiniz</option>
                   <option value="Yıkama">Zemin</option>
                   <option value="Kurulama">E-flow</option>
                   <option value="Sıkma">Random</option>
-                  <option value="Nötr">Random</option>
+                  <option value="Nötr">Nötr</option>
                 </select>
+              </div>
                 <div class="alert alert-danger"
                   *ngIf="errorAddForm.get('departmant')!.hasError('required') && errorAddForm.get('departmant')!.dirty">
                 </div>
               </form-field>
             </div>
           </div>
+
+          <br>
           
           
           <div class="row">
             <div class="col col-md-12">
-                <input type="color" id="colorCode" name="colorCode" [formControl]="colorCode"><br><br>
-                <div class="alert alert-danger"
-                  *ngIf="errorAddForm.get('colorCode')!.hasError('colorCode') && errorAddForm.get('colorCode')!.dirty">
+              <div class="d-flex flex-row">
+                <div class="col-md-6 pr-2">
+                  <input type="color" id="colorCode" name="colorCode" [formControl]="errorAddForm.get('colorCode')" (input)="updateBackgroundColor()"><br><br>
+                  <div class="alert alert-danger"
+                    *ngIf="errorAddForm.get('colorCode')!.hasError('required') && errorAddForm.get('colorCode')!.dirty">
+                  </div>
                 </div>
+                <div class="col-md-6 pl-2">
+                  <div class="card p-2 align-items-center justify-content-center"
+                    style="color: rgb(3, 0, 0); font-weight: 500; border: 2px solid;"
+                    [style.background-color]="selectedColor">
+                    Hata Adı
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           
+          
+          
 
-          <div class="row">
-            <div class="col col-md-2">
-                       <mat-checkbox  formControlName="status" id="status" name="status" > status
-                      </mat-checkbox>
-            </div>
-          </div>
+         
                    
           <button mat-raised-button type="submit" class="btn btn-danger pull-right">{{'Save'|translate}}</button>
           <div class="clearfix"></div>

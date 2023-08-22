@@ -55,6 +55,7 @@ namespace DataAccess.Concrete.EntityFramework.Contexts
         public DbSet<Error> Errors { get; set; }
         public DbSet<WashingControll_Floor> WashingControll_Floors { get; set; }
         public DbSet<WashingControll_FloorControll> WashingControll_FloorControlls { get; set; }
+        public DbSet<FloorControllError> FloorControllErrors { get; set; }
 
         protected IConfiguration Configuration { get; }
 

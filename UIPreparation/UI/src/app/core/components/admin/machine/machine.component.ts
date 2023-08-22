@@ -22,7 +22,7 @@ export class MachineComponent implements AfterViewInit, OnInit {
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	displayedColumns: string[] = ['createdDate','status','machineName','machineType', 'update','delete'];
+	displayedColumns: string[] = ['createdDate','machineName','machineType', 'update','delete'];
 
 	machineList:Machine[];
 	machine:Machine=new Machine();
@@ -98,7 +98,6 @@ export class MachineComponent implements AfterViewInit, OnInit {
 	createMachineAddForm() {
 		this.machineAddForm = this.formBuilder.group({		
 			id : [0],
-status : [false, Validators.required],
 machineName : ["", Validators.required],
 machineType : ["", Validators.required]
 		})

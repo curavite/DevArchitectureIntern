@@ -37,6 +37,7 @@ import { MatDialogModule} from '@angular/material/dialog';
 
 import { WashingControll_FloorControllComponent } from '../components/admin/washingControll_FloorControll/washingControll_FloorControll.component';
 import { OpenDialogComponent } from '../components/admin/open-dialog/open-dialog.component';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 
 
@@ -60,6 +61,7 @@ import { OpenDialogComponent } from '../components/admin/open-dialog/open-dialog
         MatTableModule,
         MatPaginatorModule,
         MatAutocompleteModule,
+        MatSlideToggleModule,
         MatSortModule,
         MatCheckboxModule,
         NgbModule,

@@ -90,6 +90,7 @@ namespace Business
         public void ConfigureDevelopmentServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IFloorControllErrorRepository, FloorControllErrorRepository>();
             services.AddTransient<IWashingControll_FloorControllRepository, WashingControll_FloorControllRepository>();
             services.AddTransient<IWashingControll_FloorRepository, WashingControll_FloorRepository>();
             services.AddTransient<IErrorRepository, ErrorRepository>();
@@ -118,6 +119,7 @@ namespace Business
         public void ConfigureStagingServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IFloorControllErrorRepository, FloorControllErrorRepository>();
             services.AddTransient<IWashingControll_FloorControllRepository, WashingControll_FloorControllRepository>();
             services.AddTransient<IWashingControll_FloorRepository, WashingControll_FloorRepository>();
             services.AddTransient<IErrorRepository, ErrorRepository>();
@@ -146,6 +148,7 @@ namespace Business
         public void ConfigureProductionServices(IServiceCollection services)
         {
             ConfigureServices(services);
+            services.AddTransient<IFloorControllErrorRepository, FloorControllErrorRepository>();
             services.AddTransient<IWashingControll_FloorControllRepository, WashingControll_FloorControllRepository>();
             services.AddTransient<IWashingControll_FloorRepository, WashingControll_FloorRepository>();
             services.AddTransient<IErrorRepository, ErrorRepository>();

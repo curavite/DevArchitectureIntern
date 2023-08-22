@@ -1,0 +1,150 @@
+select {
+    appearance: none;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    /* Personalize */
+    flex: 1;
+    padding: 0 1em;
+    color: #000000;
+    background-color: var(--darkgray);
+    background-image: none;
+    cursor: pointer;
+  }
+  select::-ms-expand {
+    display: none;
+  }
+  .select {
+    position: relative;
+    display: flex;
+    width: 30em;
+    height: 3em;
+    border-radius: .25em;
+    overflow: hidden;
+  }
+  /* Arrow */
+  .select::after {
+    content: '\25BC';
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 1em;
+    background-color: #34495e;
+    transition: .25s all ease;
+    pointer-events: none;
+    color: #f39c12;
+  }
+  /* Transition */
+  /* .select:hover::after {
+    color: #f39c12;
+  } */
+  
+
+
+
+body {
+	background: #aa73e0;
+	display: flex;
+	justify-content: flex-end; 
+	align-items: flex-start;
+	flex-direction: column;
+	font-family: 'Montserrat', sans-serif;
+	height: 100vh;
+	margin: 0;
+	padding: 20px; 
+}
+
+
+
+
+
+button {
+	border-radius: .5rem;
+	border: 0;
+	background-color: #ffae00;
+	color: #FFFFFF;
+	font-size: 12px;
+	font-weight: bold;
+	padding: .5rem 5rem;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+	transition: transform 80ms ease-in;
+}
+
+
+
+
+
+
+
+
+form {
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	padding: 0 50px;
+	height: 100%;
+	text-align: center;
+} 
+h3{
+    color: #fafafa;
+    font-weight: 400;
+}
+h4{
+    color: #fafafa;
+}
+
+input {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+    color: #000000;
+    font-weight: 600;
+    
+    
+}
+label {
+	background-color: #eee;
+	border: none;
+	padding: 12px 15px;
+	margin: 8px 0;
+	width: 100%;
+    color: #000000;
+    text-align: left;
+    font-weight: 600;
+    
+}
+
+
+.main{
+    width:100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .flash-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem 1rem 1rem;
+    user-select: none;
+    width: 50rem;
+    border: 1px solid rgba(255, 255, 255, 0.1254901961);
+    background: linear-gradient(0deg, rgb(52, 48, 40) 0%, rgba(17, 0, 32, 0.5) 100%);
+    box-shadow: 0 5px 20px 5px rgba(0, 0, 0, 0.5019607843);
+    border-radius: 0.7rem;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    overflow: hidden;
+    transition: 0.3s all;
+  }
+
+
+
+
+

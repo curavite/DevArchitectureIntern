@@ -17,6 +17,7 @@ import { ErrorService } from "../error/services/error.service";
 import { error, log } from "console";
 import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
 import { OpenDialogComponent } from "../open-dialog/open-dialog.component";
+import { element } from "protractor";
 
 declare var jQuery: any;
 
@@ -44,6 +45,7 @@ export class WashingControll_FloorControllComponent
   errorListColor0:string
   errorListisError0:Boolean;
   errorListName0:string
+  getTotalCountt:number=0;
 
   selectedError: Error;
   selectedErrors: WashingControll_FloorControll[] = [];
@@ -102,7 +104,9 @@ export class WashingControll_FloorControllComponent
          this.configDataTable();
       });
   }
-
+  sortErrorList() {
+    return this.errorList.slice(1).sort((a, b) => a.rowNumber - b.rowNumber);
+  }
 
   
 
@@ -146,6 +150,7 @@ export class WashingControll_FloorControllComponent
       return 0;
     }
   }
+  
 
   addErrorToTable(error: Error) {
     const existingErrorIndex = this.selectedErrors.findIndex(
@@ -162,11 +167,35 @@ export class WashingControll_FloorControllComponent
   }
 
   addFaulty(error: Error) {
+    this.getTotalCountt=this.getTotalCount();
+    if (this.getTotalCountt<this.floorList[this.floorListLenght].sumProductAmount) {
+      
+    
     if (error.isError == true) {
       this.faultyProduct += 1;
     }
     this.addErrorToTable(error);
+    }else{
+      this.alertifyService.error("Kontrol edilen ürün toplam üründen fazla olamaz!!")
+    }
+  
   }
+    deleteRow(element: any) {
+      console.log('Deleting:', element);
+    
+      const index = this.errorList.findIndex(item => item.id === element.id);
+      console.log('Index:', index);
+      
+      if (index !== -1) {
+        console.log('Found at index:', index);
+        
+        this.errorList.splice(index, 1);
+        this.configDataTable();
+
+      }
+    }
+    
+  
 
   getErrorList() {
     this.errorService.getErrorList().subscribe((data) => {
@@ -231,7 +260,25 @@ export class WashingControll_FloorControllComponent
         this.clearFormGroup(this.washingControll_FloorControllAddForm);
       });
   }
-  setControllResultToTamir() {
+  setControllResultToControll() {
+    this.stopTimer(); 
+    this.finishStarter();
+    
+    
+    
+    this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Tamamlama Kontrole Gönder");
+    this.save(); 
+  }
+  setControllResultToConsignment() {
+    this.stopTimer(); 
+    this.finishStarter();
+    
+    
+    
+    this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Sevk Et");
+    this.save(); 
+  }
+  setControllResultToFix() {
     this.stopTimer(); 
     this.finishStarter();
     

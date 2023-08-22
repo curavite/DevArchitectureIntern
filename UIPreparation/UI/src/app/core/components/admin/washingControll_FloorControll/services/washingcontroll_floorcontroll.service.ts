@@ -1,8 +1,9 @@
 ﻿import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { WashingControll_FloorControll } from '../models/WashingControll_FloorControll';
 import { environment } from 'environments/environment';
+import { WashingControll_FloorControll } from '../models/washingcontroll_floorcontroll';
+import { FloorControllError } from '../models/floorControllError';
 
 
 @Injectable({
@@ -27,6 +28,8 @@ export class WashingControll_FloorControllService {
     return this.httpClient.post(environment.getApiUrl + '/washingControll_FloorControlls/', washingControll_FloorControll, { responseType: 'text' });
   }
 
+
+
   updateWashingControll_FloorControll(washingControll_FloorControll: WashingControll_FloorControll): Observable<any> {
     return this.httpClient.put(environment.getApiUrl + '/washingControll_FloorControlls/', washingControll_FloorControll, { responseType: 'text' });
 
@@ -34,6 +37,22 @@ export class WashingControll_FloorControllService {
 
   deleteWashingControll_FloorControll(id: number) {
     return this.httpClient.request('delete', environment.getApiUrl + '/washingControll_FloorControlls/', { body: { id: id } });
+  }
+
+
+
+
+  getFloorControllErrorList(): Observable<FloorControllError[]> {
+
+    return this.httpClient.get<FloorControllError[]>(environment.getApiUrl + '/floorControllErrors/getall')
+  }
+  addFloorControllError(floorControllError: FloorControllError): Observable<any> {
+
+    return this.httpClient.post(environment.getApiUrl + '/floorControllErrors/', floorControllError, { responseType: 'text' });
+  }
+
+  deleteFloorControllError(id: number) {
+    return this.httpClient.request('delete', environment.getApiUrl + '/floorControllErrors/', { body: { id: id } });
   }
 
 

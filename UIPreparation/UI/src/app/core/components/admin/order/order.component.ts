@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { AlertifyService } from 'app/core/services/alertify.service';
-import { LookUpService } from 'app/core/services/lookUp.service';
+import { LookUpService } from 'app/core/services/LookUp.service';
 import { AuthService } from 'app/core/components/admin/login/services/auth.service';
 
 import { environment } from 'environments/environment';
@@ -23,7 +23,7 @@ export class OrderComponent implements AfterViewInit, OnInit {
 	dataSource: MatTableDataSource<any>;
 	@ViewChild(MatPaginator) paginator: MatPaginator;
 	@ViewChild(MatSort) sort: MatSort;
-	displayedColumns: string[] = ['createdDate','status','orderNumber','orderModelName','orderMaterialName', 'update','delete'];
+	displayedColumns: string[] = ['createdDate','orderNumber','orderModelName','orderMaterialName', 'update','delete'];
 
 	orderList:Order[];
 	order:Order=new Order();
@@ -99,7 +99,6 @@ export class OrderComponent implements AfterViewInit, OnInit {
 	createOrderAddForm() {
 		this.orderAddForm = this.formBuilder.group({		
 			id : [0],
-status : [true, Validators.required],
 orderNumber : ["", Validators.required],
 orderModelName : ["", Validators.required],
 orderMaterialName : ["", Validators.required]

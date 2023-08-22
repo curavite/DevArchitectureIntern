@@ -47,7 +47,7 @@ namespace Business.Handlers.Machines.Commands
                 {
                     CreatedUserId = request.CreatedUserId,
                     CreatedDate = DateTime.Now,
-                    Status = request.Status,
+                    Status = true,
                     isDeleted = false,
                     MachineName = request.MachineName,
                     MachineType = request.MachineType,
