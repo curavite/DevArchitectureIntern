@@ -90,7 +90,7 @@ export class WashingControll_FloorControllComponent
     this.getFloorList();
 	this.getTotalCount();
 	this.calculateTotal();
-  this.startTimer();
+ 
 
 
   }
@@ -261,29 +261,28 @@ export class WashingControll_FloorControllComponent
       });
   }
   setControllResultToControll() {
-    this.stopTimer(); 
     this.finishStarter();
     
     
-    
+    this.washingControll_FloorControllAddForm.get("controllTime")?.setValue(this.second);
+
     this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Tamamlama Kontrole Gönder");
     this.save(); 
   }
   setControllResultToConsignment() {
-    this.stopTimer(); 
     this.finishStarter();
     
     
-    
+    this.washingControll_FloorControllAddForm.get("controllTime")?.setValue(this.second);
+
     this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Sevk Et");
     this.save(); 
   }
   setControllResultToFix() {
-    this.stopTimer(); 
     this.finishStarter();
     
     
-    
+    this.washingControll_FloorControllAddForm.get("controllTime")?.setValue(this.second);
     this.washingControll_FloorControllAddForm.get("controllResult")?.setValue("Tamir");
     this.save(); 
   }
@@ -359,43 +358,23 @@ export class WashingControll_FloorControllComponent
   }
   
   startTimer() {
-    this.sayacElem = document.getElementById("sayac"); // use "sayac" as the id
-    if (!this.interval && this.sayacElem) {
+     if (!this.interval ) {
       this.counter();
       this.interval = setInterval(this.counter.bind(this), 1000);
     }
+   
+    
+    
   }
 
   counter() {
-    var toplamSaniye = this.second;
-    var saat = Math.floor(toplamSaniye / 3600) % 24;
-    var dakika = Math.floor(toplamSaniye / 60) % 60;
-    var saniye = toplamSaniye % 60;
-
-    if (this.sayacElem) {
-      this.sayacElem.innerHTML =
-        (saat < 10 ? "0" + saat : saat) +
-        ":" +
-        (dakika < 10 ? "0" + dakika : dakika) +
-        ":" +
-        (saniye < 10 ? "0" + saniye : saniye);
-    }
-
     this.second += 1;
-    
   }
 
-  stopTimer() {
-    clearInterval(this.interval);
-    this.interval = null;
-  }
 
   finishStarter() {
-    this.stopTimer();
-    if (this.sayacElem) {
-      this.sayacElem.innerHTML = "";
-    }
-    
+    clearInterval(this.interval);
+    this.interval = null;
   }
    
   

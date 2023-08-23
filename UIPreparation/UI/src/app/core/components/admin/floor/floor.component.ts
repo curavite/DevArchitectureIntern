@@ -70,44 +70,23 @@ export class FloorComponent implements OnInit {
     
 
     this.getGroupUsers();
-    this.filteredMachineItems = this.floorAddForm.controls.groupUsers.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterMachinePersonel(value || '')),
-    );
+  
 
     this.getorderNumber();
-    this.filteredOrderItems = this.floorAddForm.controls.orderNames.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterOrderName(value || '')),
-    );
+
     this.getMachineType();
-    this.filteredWashingMachineTypeItems = this.floorAddForm.controls.washingMachine.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterWashingMachineType(value || '')),
-    );
-    this.filteredDryingMachineTypeItems = this.floorAddForm.controls.dryingMachine.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterDryingMachineType(value || '')),
-    );
-    this.filteredSquezeeMachineTypeItems = this.floorAddForm.controls.squeezMachine.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterSquezeeMachineType(value || '')),
-    );
+ 
+   
+ 
     this.getManagers();
-    this.filteredManagerItems = this.floorAddForm.controls.manager.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filterManager(value || '')),
-    );
+  
   }
 
-  private _filterMachinePersonel(value: string): LookUp[] {
+
+  private _filter(value: string): LookUp[] {
     const filterValue = value.toLowerCase();
-
     return this.machineUserSelectedItems.filter(option => option.label.toLowerCase().includes(filterValue));
-    
   }
-
-
   private _filterManager(value: string): LookUp[] {
     const filterValue = value.toLowerCase();
 
@@ -116,12 +95,7 @@ export class FloorComponent implements OnInit {
   }
 
 
-  private _filterOrderName(value: string): LookUp[] {
-    const filterValue = value.toLowerCase();
 
-    return this.orderNumber.filter(option => option.label.toLowerCase().includes(filterValue));
-    
-  }
 
   private _filterWashingMachineType(value: string): LookUp[] {
     const filterValue = value.toLowerCase();
@@ -175,18 +149,33 @@ getMachineType() {
         this.machineWashingTypeItems.push({
           id: element.id,
           label: element.machineName
-        });}
+        });
+        this.filteredWashingMachineTypeItems = this.floorAddForm.controls.washingMachine.valueChanges.pipe(
+          startWith(''),
+          map(value => typeof value === 'string' ? value : value?.label),
+          map(name => name ? this._filterWashingMachineType(name) : this.machineWashingTypeItems.slice())
+        );}
         if (element.machineType === "Kurulama") {
           this.machineDryingTypeItems.push({
             id: element.id,
             label: element.machineName
           });
+          this.filteredDryingMachineTypeItems = this.floorAddForm.controls.dryingMachine.valueChanges.pipe(
+            startWith(''),
+            map(value => typeof value === 'string' ? value : value?.label),
+            map(name => name ? this._filterDryingMachineType(name) : this.machineDryingTypeItems.slice())
+          );
         }
         if (element.machineType === "Sıkma") {
           this.machineSquezeeTypeItems.push({
             id: element.id,
             label: element.machineName
           });
+          this.filteredSquezeeMachineTypeItems = this.floorAddForm.controls.squeezMachine.valueChanges.pipe(
+            startWith(''),
+            map(value => typeof value === 'string' ? value : value?.label),
+            map(name => name ? this._filterSquezeeMachineType(name) : this.machineSquezeeTypeItems.slice())
+          );
         }
     }) 
     });
@@ -203,6 +192,7 @@ getMachineType() {
           label:element.orderNumber
         })
       })
+   
 
     })
     
@@ -213,6 +203,13 @@ getMachineType() {
     
    this.groupService.getGroupUsers(1).subscribe(data => {
      this.machineUserSelectedItems = data;
+
+         this.filteredMachineItems = this.floorAddForm.controls.groupUsers.valueChanges.pipe(
+      startWith(''),
+        map(value => typeof value === 'string' ? value : value?.label),
+
+				map(name => name ? this._filter(name) : this.machineUserSelectedItems.slice())
+     );
      
    })
   }
@@ -220,7 +217,14 @@ getMachineType() {
   getManagers(){
     this.groupService.getGroupUsers(2).subscribe(data => {
       this.managerSelectedItems = data;
-      
+
+
+      this.filteredManagerItems = this.floorAddForm.controls.manager.valueChanges.pipe(
+        startWith(''),
+        map(value => typeof value === 'string' ? value : value?.label),
+
+				map(name => name ? this._filterManager(name) : this.managerSelectedItems.slice())
+      );
       
     })
   }
@@ -241,6 +245,8 @@ getMachineType() {
 
 
   addFloor(){
+    console.log("çalıştı");
+    
     this.floor.createdUserId=1;
     this.floor.managerName=this.floorAddForm.controls.manager.value;
     this.floor.jobRotation="Gündüz";
@@ -249,7 +255,9 @@ getMachineType() {
     this.floor.squeezMachine=this.floorAddForm.controls.squeezMachine.value;
     this.floor.machineEmployee=this.floorAddForm.controls.groupUsers.value;
      this.floor.orderName=this.selectedOrderNumber;
-     ;
+     this.floor.sumProductAmount=this.floorAddForm.controls.sumProductAmount.value;
+     this.floor.jobRotation=this.floorAddForm.controls.jobRotation.value;
+     this.floor.brendaNumber=this.floorAddForm.controls.brendaNumber.value;
     
     
 		this.floorService.addWashingControll_Floor(this.floor).subscribe(data => {
@@ -260,20 +268,19 @@ getMachineType() {
 
 
 		},(error)=>{
-      this.alertifyService.info(error.error)
+      this.alertifyService.error(error.error)
     })
 
 	}
   save(){
     
-		if (this.floorAddForm.valid) {
-			this.floor = Object.assign({}, this.floorAddForm.value)
+		 if (this.floorAddForm.valid) {
+		 	this.floor = Object.assign({}, this.floorAddForm.value)
       
 
-			if (this.floor.id == 0){
 				this.addFloor();
 
-      }
+      
 			
 		}
     else{
@@ -282,7 +289,20 @@ getMachineType() {
     }
 
 	}
+  toggleJobRotation(event: any) {
+    const isChecked = event.checked;
+    console.log(event.checked);
+    
+  
+    if (event.checked==true) {
+      this.floorAddForm.get('jobRotation').setValue('Gündüz vardiyesi');
+    } else {
+      this.floorAddForm.get('jobRotation').setValue('Gece vardiyesi');
+    }
+  }
 
+
+  
   
 
   createFloorAddForm() {
@@ -296,7 +316,7 @@ squeezMachine: ["", Validators.required],
 manager : ["", Validators.required],
 sumProductAmount:[0, Validators.required],
 brendaNumber : ["", Validators.required],
-
+jobRotation: ["false", Validators.required],
 		})
 	}
 

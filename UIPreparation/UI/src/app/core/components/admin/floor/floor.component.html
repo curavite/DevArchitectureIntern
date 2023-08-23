@@ -1,5 +1,9 @@
 
 
+<br>
+<br>
+<br>
+<br>
 <div class="main"  >
   <div class="flash-card">
     <form *ngIf="floorAddForm" [formGroup]="floorAddForm" (ngSubmit)="save()">
@@ -22,13 +26,16 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
     {{ option.label }}
   </mat-option>
 </mat-autocomplete> -->
-<div  class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;">
-  <select   id="orderNames" name="orderNames" formControlName="orderNames" (change)="onOrderOptionClick($event)">
-  <option *ngFor="let number of orderNumber" [value]="number.id">{{ number.label }}</option>
-</select>
+<div class="select" style="background-color: rgb(243, 243, 243); border: 1px solid #adadad;">
+  <select id="orderNames" name="orderNames" formControlName="orderNames" (change)="onOrderOptionClick($event)">
+    <option *ngFor="let number of orderNumber" [value]="number.id">{{ number.label }}</option>
+  </select>
 </div>
+
+
 <br>
 <br>
+
 
 <div class="row">
   <div class="col-md-6">
@@ -50,7 +57,7 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
   <div class="col col-md-12">
 
     <h3> Yıkama Makinesi</h3>
-    <input
+    <input 
     style="background-color: rgb(243, 243, 243);border: 1px solid #adadad;"
 
     type="text"
@@ -62,7 +69,8 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
 
 
   />
-  <mat-autocomplete #washingMachineAuto="matAutocomplete">
+
+  <mat-autocomplete #washingMachineAuto="matAutocomplete" >  
     <mat-option *ngFor="let option of filteredWashingMachineTypeItems | async" [value]="option.label">
       {{ option.label }}
     </mat-option>
@@ -192,8 +200,22 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
     />
   </div>
 </div>
+<br>
 
-<mat-slide-toggle>Slide me!</mat-slide-toggle>
+<div class="row">
+  <div class="col col-md-6" style="display: flex; justify-content: center; align-items: center;width: 100%;">
+    <mat-slide-toggle #slide (change)="toggleJobRotation($event)">
+      <span>{{ slide.checked ? 'Gündüz vardiyesi' : 'Gece vardiyesi' }}</span>
+    </mat-slide-toggle>
+  </div>
+  
+  <div class="col col-md-6" >
+    <button placeholder="Bilgileri Sıfırla" class="input2" type="reset">Bilgileri Sıfırla</button>
+  </div>
+  
+</div>
+
+
 
 
 
@@ -204,3 +226,4 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
   </form>
   </div>
 </div>
+
