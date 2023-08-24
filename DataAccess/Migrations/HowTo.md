@@ -15,7 +15,7 @@ dotnet ef migrations add InitialCreate --context ProjectDbContext --output-dir M
 // Ms Sql Server
 
 $env:ASPNETCORE_ENVIRONMENT='Staging'
-Add-Migration add-controllError -context MsDbContext -OutputDir Migrations/Ms
+Add-Migration nameChange -context MsDbContext -OutputDir Migrations/Ms
 $env:ASPNETCORE_ENVIRONMENT='Staging'
 Update-Database -context MsDbContext
 

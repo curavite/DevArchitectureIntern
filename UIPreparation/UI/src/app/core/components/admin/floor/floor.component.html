@@ -144,7 +144,7 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
       aria-label="Number"
       matInput
       [matAutocomplete]="machinePersonnelAuto"
-      formControlName="groupUsers"
+      formControlName="machineEmployee"
     />
     <mat-autocomplete #machinePersonnelAuto="matAutocomplete">
       <mat-option *ngFor="let option of filteredMachineItems | async" [value]="option.label">
@@ -162,7 +162,7 @@ class="select" style="background-color: rgb(243, 243, 243);border: 1px solid #ad
       aria-label="Text"
       matInput
       [matAutocomplete]="managerAuto"
-      formControlName="manager"
+      formControlName="managerName"
     />
     <mat-autocomplete #managerAuto="matAutocomplete">
       <mat-option *ngFor="let option of filteredManagerItems | async" [value]="option.label">

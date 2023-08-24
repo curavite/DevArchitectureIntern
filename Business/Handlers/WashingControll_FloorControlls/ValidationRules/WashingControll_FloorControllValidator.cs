@@ -10,8 +10,6 @@ namespace Business.Handlers.WashingControll_FloorControlls.ValidationRules
         public CreateWashingControll_FloorControllValidator()
         {
             RuleFor(x => x.Amount).NotEmpty();
-            RuleFor(x => x.Percent).NotEmpty();
-            RuleFor(x => x.FaultyProduct).NotEmpty();
             RuleFor(x => x.ControllTime).NotEmpty();
             RuleFor(x => x.ControllResult).NotEmpty();
 

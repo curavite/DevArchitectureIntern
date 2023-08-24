@@ -13,6 +13,7 @@ import { FloorService } from './services/wscFloor.service';
 import { WashingControll_Floor } from './models/wscFloor';
 import { AlertifyService } from 'app/core/services/alertify.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../login/services/auth.service';
 declare var jQuery: any;
 
 @Component({
@@ -24,7 +25,7 @@ export class FloorComponent implements OnInit {
 
 
 
-  constructor(private groupService:GroupService,private router: Router,private alertifyService:AlertifyService,private orderService:OrderService,private floorService:FloorService,private machineService:MachineService,private formBuilder: FormBuilder) { }
+  constructor(private groupService:GroupService,private router: Router,private alertifyService:AlertifyService,private orderService:OrderService,private floorService:FloorService,private machineService:MachineService,private formBuilder: FormBuilder,private authService:AuthService) { }
   selectedOrderId: number;
   selectedOrderName:string;
   selectedOrderMaterialName:string;
@@ -64,6 +65,7 @@ export class FloorComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.authService.getCurrentUserId();
 
     this.createFloorAddForm();
 
@@ -204,7 +206,7 @@ getMachineType() {
    this.groupService.getGroupUsers(1).subscribe(data => {
      this.machineUserSelectedItems = data;
 
-         this.filteredMachineItems = this.floorAddForm.controls.groupUsers.valueChanges.pipe(
+         this.filteredMachineItems = this.floorAddForm.controls.machineEmployee.valueChanges.pipe(
       startWith(''),
         map(value => typeof value === 'string' ? value : value?.label),
 
@@ -219,7 +221,7 @@ getMachineType() {
       this.managerSelectedItems = data;
 
 
-      this.filteredManagerItems = this.floorAddForm.controls.manager.valueChanges.pipe(
+      this.filteredManagerItems = this.floorAddForm.controls.managerName.valueChanges.pipe(
         startWith(''),
         map(value => typeof value === 'string' ? value : value?.label),
 
@@ -247,19 +249,10 @@ getMachineType() {
   addFloor(){
     console.log("çalıştı");
     
-    this.floor.createdUserId=1;
-    this.floor.managerName=this.floorAddForm.controls.manager.value;
-    this.floor.jobRotation="Gündüz";
-    this.floor.washingMachine=this.floorAddForm.controls.washingMachine.value;
-    this.floor.dryingMachine=this.floorAddForm.controls.dryingMachine.value;
-    this.floor.squeezMachine=this.floorAddForm.controls.squeezMachine.value;
-    this.floor.machineEmployee=this.floorAddForm.controls.groupUsers.value;
-     this.floor.orderName=this.selectedOrderNumber;
-     this.floor.sumProductAmount=this.floorAddForm.controls.sumProductAmount.value;
-     this.floor.jobRotation=this.floorAddForm.controls.jobRotation.value;
-     this.floor.brendaNumber=this.floorAddForm.controls.brendaNumber.value;
+  
     
-    
+    this.floor.orderName=this.selectedOrderNumber;
+
 		this.floorService.addWashingControll_Floor(this.floor).subscribe(data => {
 			this.floor = new WashingControll_Floor();
       jQuery('#order').modal('hide');
@@ -273,7 +266,9 @@ getMachineType() {
 
 	}
   save(){
-    
+     this.floor.orderName=this.selectedOrderNumber;
+
+    this.floor.createdUserId=this.authService.getCurrentUserId();
 		 if (this.floorAddForm.valid) {
 		 	this.floor = Object.assign({}, this.floorAddForm.value)
       
@@ -308,12 +303,12 @@ getMachineType() {
   createFloorAddForm() {
 		this.floorAddForm = this.formBuilder.group({		
 			id : [0],
-      groupUsers : ["", Validators.required],
+      machineEmployee : ["", Validators.required],
 orderNames : ["", Validators.required],
 washingMachine: ["", Validators.required],
 dryingMachine: ["", Validators.required],
 squeezMachine: ["", Validators.required],
-manager : ["", Validators.required],
+managerName : ["", Validators.required],
 sumProductAmount:[0, Validators.required],
 brendaNumber : ["", Validators.required],
 jobRotation: ["false", Validators.required],

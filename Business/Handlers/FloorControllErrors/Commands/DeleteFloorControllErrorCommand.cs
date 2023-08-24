@@ -20,6 +20,8 @@ namespace Business.Handlers.FloorControllErrors.Commands
     {
         public int Id { get; set; }
 
+        public string ErrorName { get; set; }
+
         public class DeleteFloorControllErrorCommandHandler : IRequestHandler<DeleteFloorControllErrorCommand, IResult>
         {
             private readonly IFloorControllErrorRepository _floorControllErrorRepository;
@@ -36,11 +38,14 @@ namespace Business.Handlers.FloorControllErrors.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(DeleteFloorControllErrorCommand request, CancellationToken cancellationToken)
             {
-                var floorControllErrorToDelete = _floorControllErrorRepository.Get(p => p.Id == request.Id);
+                var deleteFloorError = await _floorControllErrorRepository.Delete2(request.Id,request.ErrorName);
 
-                _floorControllErrorRepository.Delete(floorControllErrorToDelete);
-                await _floorControllErrorRepository.SaveChangesAsync();
-                return new SuccessResult(Messages.Deleted);
+                if (deleteFloorError != null)
+                {
+                    return new SuccessResult(Messages.Deleted);
+                }
+
+                return new ErrorResult("Silenecek ürün bulunamadı");
             }
         }
     }

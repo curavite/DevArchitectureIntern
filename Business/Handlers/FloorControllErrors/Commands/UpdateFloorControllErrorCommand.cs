@@ -19,18 +19,9 @@ namespace Business.Handlers.FloorControllErrors.Commands
 {
 
 
-    public class UpdateFloorControllErrorCommand : IRequest<IResult>
+    public class UpdateFloorControllErrorCommand : FloorControllError, IRequest<IResult>
     {
-        public int Id { get; set; }
-        public int CreatedUserId { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public int LastUpdatedUserId { get; set; }
-        public System.DateTime LastUpdatedDate { get; set; }
-        public bool Status { get; set; }
-        public bool isDeleted { get; set; }
-        public string ErrorName { get; set; }
-        public int Amount { get; set; }
-        public int Percent { get; set; }
+ 
 
         public class UpdateFloorControllErrorCommandHandler : IRequestHandler<UpdateFloorControllErrorCommand, IResult>
         {
@@ -60,7 +51,7 @@ namespace Business.Handlers.FloorControllErrors.Commands
                 isThereFloorControllErrorRecord.isDeleted = request.isDeleted;
                 isThereFloorControllErrorRecord.ErrorName = request.ErrorName;
                 isThereFloorControllErrorRecord.Amount = request.Amount;
-                isThereFloorControllErrorRecord.Percent = request.Percent;
+                isThereFloorControllErrorRecord.WSHfloorControllId = request.WSHfloorControllId;
 
 
                 _floorControllErrorRepository.Update(isThereFloorControllErrorRecord);

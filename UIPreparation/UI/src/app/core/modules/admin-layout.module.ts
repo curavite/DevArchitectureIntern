@@ -38,6 +38,7 @@ import { MatDialogModule} from '@angular/material/dialog';
 import { WashingControll_FloorControllComponent } from '../components/admin/washingControll_FloorControll/washingControll_FloorControll.component';
 import { OpenDialogComponent } from '../components/admin/open-dialog/open-dialog.component';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import { FloorControllErrorComponent } from '../components/admin/floorControllError/floorControllError.component';
 
 
 
@@ -92,7 +93,7 @@ import {MatSlideToggleModule} from '@angular/material/slide-toggle';
         OpenDialogComponent,
         OrderComponent,
         WashingControll_FloorControllComponent,
-
+        FloorControllErrorComponent
     ]
 })
 

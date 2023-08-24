@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Business.Handlers.FloorControllErrors.ValidationRules;
 using System;
+using Business.Handlers.WashingControll_FloorControlls.Queries;
 
 namespace Business.Handlers.FloorControllErrors.Commands
 {
@@ -42,7 +43,25 @@ namespace Business.Handlers.FloorControllErrors.Commands
             [SecuredOperation(Priority = 1)]
             public async Task<IResult> Handle(CreateFloorControllErrorCommand request, CancellationToken cancellationToken)
             {
-         
+
+                var isErrorNameExist =  _floorControllErrorRepository.Query().Any(u=>u.ErrorName == request.ErrorName && u.WSHfloorControllId == request.WSHfloorControllId);
+                if (isErrorNameExist==true)
+                {
+                    var isThereFloorControllErrorRecord = await _floorControllErrorRepository.GetAsync(u=> u.WSHfloorControllId==request.WSHfloorControllId &&u.ErrorName==request.ErrorName);
+
+                    isThereFloorControllErrorRecord.Amount++;
+                    
+                    _floorControllErrorRepository.Update(isThereFloorControllErrorRecord);
+                    await _floorControllErrorRepository.SaveChangesAsync();
+                    return new SuccessResult("Güncellendi");
+
+
+                }
+
+                //var allFloorControll = await _mediator.Send(new GetWashingControll_FloorControllsQuery());
+                //var maxFloorControllId = allFloorControll.Data.Max(u => u.Id);
+                //var newFloorControllId = maxFloorControllId + 1;
+
 
                 var addedFloorControllError = new FloorControllError
                 {
@@ -52,7 +71,7 @@ namespace Business.Handlers.FloorControllErrors.Commands
                     isDeleted = false,
                     ErrorName = request.ErrorName,
                     Amount = request.Amount,
-                    Percent = request.Percent,
+                    WSHfloorControllId = request.WSHfloorControllId,
 
                 };
 

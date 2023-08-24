@@ -1,3 +1,4 @@
+﻿
 export class FloorControllError{
     id?:number; 
 createdUserId?:number; 
@@ -8,6 +9,6 @@ status:boolean;
 isDeleted:boolean; 
 errorName?:string; 
 amount?:number; 
-percent?:number; 
+wSHfloorControllId?:number; 
 
 }

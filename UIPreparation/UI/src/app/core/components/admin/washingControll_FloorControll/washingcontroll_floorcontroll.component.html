@@ -37,11 +37,12 @@
             <ng-container matColumnDef="delete">
               <th mat-header-cell *matHeaderCellDef></th>
               <td style="width: 25px;" mat-cell *matCellDef="let element">
-                <a *ngIf="checkClaim('DeleteWashingControll_FloorControllCommand')" (click)="deleteRow(element)" [swal]="deleteSwal">
+                <a *ngIf="checkClaim('DeleteWashingControll_FloorControllCommand')" (click)="confirmDelete(element)">
                   <i title="{{ 'Delete' | translate }}" style="color: #D9534E;" class="fas fa-trash-alt"></i>
                 </a>
               </td>
             </ng-container>
+            
           
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

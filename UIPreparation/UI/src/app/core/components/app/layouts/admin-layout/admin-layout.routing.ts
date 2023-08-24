@@ -13,6 +13,7 @@ import { OrderComponent } from 'app/core/components/admin/order/order.component'
 import { MachineComponent } from 'app/core/components/admin/machine/machine.component';
 import { ErrorComponent } from 'app/core/components/admin/error/error.component';
 import { WashingControll_FloorControllComponent } from 'app/core/components/admin/washingControll_FloorControll/washingControll_FloorControll.component';
+import { FloorControllErrorComponent } from 'app/core/components/admin/floorControllError/floorControllError.component';
 
 
 
@@ -32,7 +33,9 @@ export const AdminLayoutRoutes: Routes = [
     { path: 'order',            component: OrderComponent,canActivate:[LoginGuard]},
     { path: 'machine',            component: MachineComponent,canActivate:[LoginGuard]},
     { path: 'error',            component: ErrorComponent,canActivate:[LoginGuard]},
-    { path: 'floorcontroll',            component: WashingControll_FloorControllComponent,canActivate:[LoginGuard]}
+    { path: 'floorcontroll',            component: WashingControll_FloorControllComponent,canActivate:[LoginGuard]},
+    { path: 'floorerrorcontroll',            component: FloorControllErrorComponent,canActivate:[LoginGuard]}
+
 
 
 

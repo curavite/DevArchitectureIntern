@@ -26,7 +26,9 @@ export const USERROUTES: RouteInfo[] = [
   //{ path: '/log', title: 'Logs', icon: 'update', class: '', claim: "GetLogDtoQuery" }
   { path: '/order', title: 'Order', icon: 'update', class: '', claim: "GetOrderQuery" },
   { path: '/error', title: 'Error', icon: 'update', class: '', claim: "GetErrorQuery" },
-  { path: '/machine', title: 'Machine', icon: 'update', class: '', claim: "GetMachineQuery" }
+  { path: '/machine', title: 'Machine', icon: 'update', class: '', claim: "GetMachineQuery" },
+  { path: '/floorerrorcontroll', title: 'Zemin Hata Kontrolü', icon: 'update', class: '', claim: "GetFloorControllErrorQuery" }
+
 
 ];
 

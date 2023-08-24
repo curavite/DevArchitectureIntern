@@ -9,8 +9,9 @@ namespace Business.Handlers.FloorControllErrors.ValidationRules
     {
         public CreateFloorControllErrorValidator()
         {
+            RuleFor(x => x.ErrorName).NotEmpty();
+
             RuleFor(x => x.Amount).NotEmpty();
-            RuleFor(x => x.Percent).NotEmpty();
 
         }
     }
@@ -19,7 +20,6 @@ namespace Business.Handlers.FloorControllErrors.ValidationRules
         public UpdateFloorControllErrorValidator()
         {
             RuleFor(x => x.Amount).NotEmpty();
-            RuleFor(x => x.Percent).NotEmpty();
 
         }
     }
