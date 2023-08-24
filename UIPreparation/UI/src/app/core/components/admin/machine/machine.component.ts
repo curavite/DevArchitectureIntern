@@ -66,6 +66,7 @@ export class MachineComponent implements AfterViewInit, OnInit {
 	}
 
 	addMachine(){
+		this.machine.createdUserId=this.authService.getCurrentUserId();
 
 		this.machineService.addMachine(this.machine).subscribe(data => {
 			this.getMachineList();

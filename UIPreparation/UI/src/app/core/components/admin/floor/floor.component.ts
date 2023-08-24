@@ -11,7 +11,7 @@ import { MachineService } from '../machine/services/machine.service';
 import { Machine } from '../machine/models/Machine';
 import { FloorService } from './services/wscFloor.service';
 import { WashingControll_Floor } from './models/wscFloor';
-import { AlertifyService } from 'app/core/services/alertify.service';
+import { AlertifyService } from 'app/core/services/Alertify.service';
 import { Router } from '@angular/router';
 import { AuthService } from '../login/services/auth.service';
 declare var jQuery: any;
@@ -81,6 +81,8 @@ export class FloorComponent implements OnInit {
    
  
     this.getManagers();
+
+    
   
   }
 
@@ -250,7 +252,7 @@ getMachineType() {
     console.log("çalıştı");
     
   
-    
+    this.floor.createdUserId=this.authService.getCurrentUserId();
     this.floor.orderName=this.selectedOrderNumber;
 
 		this.floorService.addWashingControll_Floor(this.floor).subscribe(data => {
@@ -266,9 +268,7 @@ getMachineType() {
 
 	}
   save(){
-     this.floor.orderName=this.selectedOrderNumber;
 
-    this.floor.createdUserId=this.authService.getCurrentUserId();
 		 if (this.floorAddForm.valid) {
 		 	this.floor = Object.assign({}, this.floorAddForm.value)
       

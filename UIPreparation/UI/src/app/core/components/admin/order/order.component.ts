@@ -67,7 +67,7 @@ export class OrderComponent implements AfterViewInit, OnInit {
 	}
 
 	addOrder(){
-
+		this.order.createdUserId=this.authService.getCurrentUserId();
 		this.orderService.addOrder(this.order).subscribe(data => {
 			this.getOrderList();
 			this.order = new Order();

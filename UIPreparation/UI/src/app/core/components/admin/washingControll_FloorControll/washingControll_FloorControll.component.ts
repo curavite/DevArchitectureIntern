@@ -126,8 +126,7 @@ export class WashingControll_FloorControllComponent
     this.washingControll_FloorControll.percent = this.calculateTotal();
     this.washingControll_FloorControll.faultyProduct = this.faultyProduct;
     this.washingControll_FloorControll.orderId = this.orderId;
-    // this.washingControll_FloorControll.createdUserId=this.authService.getCurrentUserId();
-    this.washingControll_FloorControll.createdUserId=1;
+    this.washingControll_FloorControll.createdUserId=this.authService.getCurrentUserId();
 
     this.washingControll_FloorControll.controllTime = this.second;
 
@@ -177,7 +176,7 @@ export class WashingControll_FloorControllComponent
     this.floorControllError.errorName = error.errorName;
     this.floorControllError.amount = 1;
     this.floorControllError.wSHfloorControllId = this.lastFloor;
-    this.floorControllError.createdUserId=1;
+    this.floorControllError.createdUserId=this.authService.getCurrentUserId();
     this.floorControllErrorService
       .addFloorControllError(this.floorControllError)
       .subscribe((data) => {
@@ -265,8 +264,7 @@ export class WashingControll_FloorControllComponent
       .subscribe(
         (data) => {
           this.getWashingControll_FloorControllList();
-          this.washingControll_FloorControll =
-            new WashingControll_FloorControll();
+          this.washingControll_FloorControll = new WashingControll_FloorControll();
           jQuery("#washingcontroll_floorcontroll").modal("hide");
           this.alertifyService.success(data);
           this.clearFormGroup(this.washingControll_FloorControllAddForm);

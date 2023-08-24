@@ -68,7 +68,7 @@ export class ErrorComponent implements AfterViewInit, OnInit {
 	}
 
 	addError(){
-
+		this.error.createdUserId=this.authService.getCurrentUserId();
 		this.errorService.addError(this.error).subscribe(data => {
 			this.getErrorList();
 			this.error = new Error();
